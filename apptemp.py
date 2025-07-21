@@ -2,8 +2,38 @@ import streamlit as st
 import pickle
 import string
 from nltk.corpus import stopwords
-import nltk
 from nltk.stem.porter import PorterStemmer
+
+import nltk
+import os
+
+# Define the directory where NLTK data will be downloaded
+# This ensures data is stored within your app's accessible directory
+NLTK_DATA_DIR = os.path.join(os.path.dirname(__file__), 'nltk_data')
+nltk.data.path.append(NLTK_DATA_DIR)
+
+# Check if the 'punkt' and 'stopwords' data are available, download if not
+# 'punkt' is a common NLTK dependency for tokenization
+try:
+    nltk.data.find('corpora/stopwords')
+except nltk.downloader.DownloadError:
+    print("Downloading NLTK 'stopwords' data...")
+    nltk.download('stopwords', download_dir=NLTK_DATA_DIR)
+    print("NLTK 'stopwords' data downloaded.")
+
+try:
+    nltk.data.find('tokenizers/punkt')
+except nltk.downloader.DownloadError:
+    print("Downloading NLTK 'punkt' data...")
+    nltk.download('punkt', download_dir=NLTK_DATA_DIR)
+    print("NLTK 'punkt' data downloaded.")
+
+# --- Your existing apptemp.py code starts here from this point onwards ---
+# For example, your next line might be:
+# from nltk.corpus import stopwords
+# import pickle
+# import streamlit as st
+# etc.
 
 ps = PorterStemmer()
 
